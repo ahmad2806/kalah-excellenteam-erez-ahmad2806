@@ -25,15 +25,28 @@ class Kalah(object):
         self.kalah_board[hole] = 0
         hole += 1
 
+        player_bank = self.player_one_bank if self.player_turn else self.player_two_bank
+        other_bank = self.player_one_bank if not self.player_turn else self.player_two_bank
         for amount in range(my_seeds):
+            if hole == other_bank:
+                hole += 1
             if hole > self.player_two_bank:
-                hole = 0;
+                hole = 0
+
             self.kalah_board[hole] += 1
             hole += 1
-        if self.player_turn:
-            if hole - 1 == self.player_one_bank:
-                self.player_turn = False  # so when we change turns player one still playing
-        else:
-            if hole - 1 == self.player_two_bank:
-                self.player_turn = True  # so when we change turns player two still playing
-        self.player_turn = not self.player_turn
+
+        if hole - 1 != player_bank:
+            self.player_turn = not self.player_turn
+
+
+
+
+
+
+
+
+
+
+
+

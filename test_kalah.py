@@ -6,7 +6,7 @@ class KalahTestCase(unittest.TestCase):
 
     def setUp(self):
         self.game = Kalah(6, 4)
-        self.game1 = Kalah(5, 5)
+        self.game1 = Kalah(4, 6)
 
     def tearDown(self):
         pass
@@ -60,6 +60,13 @@ class KalahTestCase(unittest.TestCase):
         self.game.play(2)
         self.assertEqual(self.game.kalah_board, [5, 0, 0, 6, 6, 6, 1, 5, 0, 0, 6, 6, 6, 1])
         self.assertEqual(self.game.player_turn, True)
+
+    def test_cross_other_bank(self):
+        self.assertEqual(self.game1.player_turn, True)
+        self.assertEqual(self.game1.kalah_board, [6, 6, 6, 6, 0, 6, 6, 6, 6, 0])
+        self.game1.play(3)
+        self.assertEqual(self.game1.kalah_board, [7, 6, 6, 0, 1, 7, 7, 7, 7, 0])
+        self.assertEqual(self.game1.player_turn, False)
 
 
 if __name__ == '__main__':

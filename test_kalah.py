@@ -115,14 +115,8 @@ class KalahTestCase(unittest.TestCase):
                 0, 0, 3, 4, 5, 6, 10,
                 1, 0, 3, 4, 5, 6, 7,
             ])
-        self.assertEqual(self.game.player_turn, False)
-        self.game.play(0)
-        self.assertEqual(
-            self.game.kalah_board,
-            [
-                0, 0, 3, 4, 5, 6, 10,
-                0, 0, 3, 4, 5, 6, 8,
-            ])
+        self.assertEqual(self.game.player_turn, True)
+
 
 
 if __name__ == '__main__':

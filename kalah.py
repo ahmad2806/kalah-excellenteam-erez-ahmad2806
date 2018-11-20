@@ -27,6 +27,15 @@ class Kalah(object):
 
         player_bank = self.player_one_bank if self.player_turn else self.player_two_bank
         other_bank = self.player_one_bank if not self.player_turn else self.player_two_bank
+
+        hole = self.move(hole, my_seeds, other_bank)
+
+        if hole != player_bank:
+            self.player_turn = not self.player_turn
+
+
+
+    def move(self, hole, my_seeds, other_bank):
         for amount in range(my_seeds):
             if hole == other_bank:
                 hole += 1
@@ -35,18 +44,5 @@ class Kalah(object):
 
             self.kalah_board[hole] += 1
             hole += 1
-
-        if hole - 1 != player_bank:
-            self.player_turn = not self.player_turn
-
-
-
-
-
-
-
-
-
-
-
-
+        hole -= 1
+        return hole

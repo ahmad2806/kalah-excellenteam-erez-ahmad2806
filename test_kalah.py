@@ -39,6 +39,15 @@ class KalahTestCase(unittest.TestCase):
         self.game.play(5)
         self.assertEqual(self.game.kalah_board, [4, 4, 0, 5, 5, 0, 2, 5, 5, 5, 5, 4, 4, 0])
 
+    def test_two_simple_moves(self):
+        self.assertEqual(self.game.player_turn, True)
+        self.assertEqual(self.game.kalah_board, [4, 4, 4, 4, 4, 4, 0, 4, 4, 4, 4, 4, 4, 0])
+        self.game.play(1)
+        self.assertEqual(self.game.kalah_board, [4, 0, 5, 5, 5, 5, 0, 4, 4, 4, 4, 4, 4, 0])
+        self.assertEqual(self.game.player_turn, False)
+        self.game.play(1)
+        self.assertEqual(self.game.kalah_board, [4, 0, 5, 5, 5, 5, 0, 4, 0, 5, 5, 5, 5, 0])
+
 
 if __name__ == '__main__':
     unittest.main()

@@ -38,8 +38,10 @@ class Kalah(object):
         if self.kalah_board[hole] == 1:
             if hole < player_bank:
                 points = 1
-                self.kalah_board[hole] = 0
                 points += self.kalah_board[other_bank - self.holes_count + hole]
+                if points == 1: # cell in the line before was empty
+                    return hole
+                self.kalah_board[hole] = 0
                 self.kalah_board[other_bank - self.holes_count + hole] = 0
                 self.kalah_board[player_bank] += points
                 return player_bank

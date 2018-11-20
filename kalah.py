@@ -14,14 +14,20 @@ class Kalah(object):
             print("illegal hole number")
             return
 
-        if not self.player_turn:  # player two turn
+        if not self.player_turn:  # player two turn start counting from his bank
             hole += (self.player_one_bank + 1)
+
+        if self.kalah_board[hole] == 0:
+            print("cell is empty, please try again")
+            return
 
         my_seeds = self.kalah_board[hole]
         self.kalah_board[hole] = 0
         hole += 1
 
         for amount in range(my_seeds):
+            if hole > self.player_two_bank:
+                hole = 0;
             self.kalah_board[hole] += 1
             hole += 1
         if self.player_turn:

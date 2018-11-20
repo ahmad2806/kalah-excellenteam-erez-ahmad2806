@@ -12,8 +12,17 @@ class KalahTestCase(unittest.TestCase):
         pass
 
     def test_init(self):
-        self.assertEqual(self.game.mancala_board, [4, 4, 4, 4, 4, 4, 0, 4, 4, 4, 4, 4, 4, 0])
-        self.assertEqual(self.game1.mancala_board, [5, 5, 5, 5, 5, 0, 5, 5, 5, 5, 5, 0])
+        self.assertEqual(self.game.kalah_board, [4, 4, 4, 4, 4, 4, 0, 4, 4, 4, 4, 4, 4, 0])
+        self.assertEqual(self.game1.kalah_board, [5, 5, 5, 5, 5, 0, 5, 5, 5, 5, 5, 0])
+
+    def test_illegal_hole(self):
+        self.assertEqual(self.game.kalah_board, [4, 4, 4, 4, 4, 4, 0, 4, 4, 4, 4, 4, 4, 0])
+        self.game.play(6)
+        self.assertEqual(self.game.kalah_board, [4, 4, 4, 4, 4, 4, 0, 4, 4, 4, 4, 4, 4, 0])
+
+        self.assertEqual(self.game1.kalah_board, [5, 5, 5, 5, 5, 0, 5, 5, 5, 5, 5, 0])
+        self.game.play(-5)
+        self.assertEqual(self.game1.kalah_board, [5, 5, 5, 5, 5, 0, 5, 5, 5, 5, 5, 0])
 
 
 if __name__ == '__main__':

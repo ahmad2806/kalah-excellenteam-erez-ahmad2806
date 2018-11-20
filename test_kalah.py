@@ -96,5 +96,34 @@ class KalahTestCase(unittest.TestCase):
         self.assertEqual(self.game.kalah_board, [0, 5, 5, 5, 5, 4, 0, 4, 4, 0, 5, 5, 5, 1])
         self.assertEqual(self.game.player_turn, False)
 
+    def test_Capture_player_1(self):
+        self.game.kalah_board = [
+            1, 0, 3, 4, 5, 6, 7,
+            1, 2, 3, 4, 5, 6, 7,
+        ]
+        self.assertEqual(self.game.player_turn, True)
+        self.assertEqual(
+            self.game.kalah_board,
+            [
+                1, 0, 3, 4, 5, 6, 7,
+                1, 2, 3, 4, 5, 6, 7,
+            ])
+        self.game.play(0)
+        self.assertEqual(
+            self.game.kalah_board,
+            [
+                0, 0, 3, 4, 5, 6, 10,
+                1, 0, 3, 4, 5, 6, 7,
+            ])
+        self.assertEqual(self.game.player_turn, False)
+        self.game.play(0)
+        self.assertEqual(
+            self.game.kalah_board,
+            [
+                0, 0, 3, 4, 5, 6, 10,
+                0, 0, 3, 4, 5, 6, 8,
+            ])
+
+
 if __name__ == '__main__':
     unittest.main()

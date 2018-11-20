@@ -7,10 +7,10 @@ class Kalah(object):
         self.holes_count = holes;
         self.player_one_bank = holes
         self.player_two_bank = holes * 2 + 1
-        self.player_turn = True
+        self.player_turn = True #true for player one and false for player two turn
 
     def play(self, hole):
-        if hole < 0 or hole > self.holes_count:
+        if hole < 0 or hole > self.holes_count or hole == self.player_two_bank or hole == self.player_two_bank:
             print("illegal hole number")
             return
 
@@ -21,3 +21,11 @@ class Kalah(object):
         for amount in range(my_seeds):
             self.kalah_board[hole] += 1
             hole += 1
+        if self.player_turn:
+            if hole - 1 == self.player_one_bank:
+                self.player_turn = False  # so when we change turns player one still playing
+        else:
+            if hole - 1 == self.player_two_bank:
+                self.player_turn = True  # so when we change turns player two still playing
+        self.player_turn = not self.player_turn
+

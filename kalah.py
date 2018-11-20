@@ -13,3 +13,11 @@ class Kalah(object):
         if hole < 0 or hole > self.holes_count:
             print("illegal hole number")
             return
+
+        my_seeds = self.kalah_board[hole]
+        self.kalah_board[hole] = 0
+        hole += 1
+
+        for amount in range(my_seeds):
+            self.kalah_board[hole] += 1
+            hole += 1

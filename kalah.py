@@ -1,4 +1,19 @@
 class Kalah(object):
+    def __repr__(self):
+        my_string = ""
+
+        my_string += "Kalah"
+        my_string += str(self.kalah_board)
+        my_string += ", player = "
+        if self.player_turn:
+            my_string += "1"
+        else:
+            my_string += "2"
+        return my_string
+
+    # def __str__(self):
+    #     return  repr(self)
+
     def __init__(self, holes, seeds):
         self.kalah_board = [seeds if not i == holes and not i == ((holes * 2) + 1) else 0 for i in
                             range(0, (holes * 2) + 2)]
@@ -66,7 +81,7 @@ class Kalah(object):
                 if hole / self.holes_count < 1:
                     temp = other_bank - self.holes_count + hole
                 else:
-                    temp = other_bank - self.holes_count + (hole % self.holes_count)-1
+                    temp = other_bank - self.holes_count + (hole % self.holes_count) - 1
                 self.kalah_board[temp] = 0
                 self.kalah_board[player_bank] += points
                 return player_bank
@@ -116,4 +131,3 @@ class Kalah(object):
             self.new_game_is_needed = True
             return True
         return False
-

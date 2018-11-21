@@ -1,4 +1,24 @@
 class Kalah(object):
+    def render(self):
+        rendered = ""
+        player1_holes = " | ".join(str(h) for h in self.kalah_board[0: self.holes_count])
+        player2_holes = " | ".join(str(h) for h in self.kalah_board[self.holes_count + 1: len(self.kalah_board) - 1])
+        player1_holes = "| | " + player1_holes + " | |"
+        player2_holes = "| | " + player2_holes + " | |"
+        vertical_separator = \
+            f'|{self.kalah_board[self.player_two_bank]}|' + \
+            ('-' * (self.holes_count * 3 + 5)) + \
+            f'|{self.kalah_board[self.player_one_bank]}|'
+
+        rendered += "\n\n"
+        rendered += "Player 2".center(len(vertical_separator)) + "\n"
+        rendered += player2_holes + "\n"
+        rendered += vertical_separator + "\n"
+        rendered += player1_holes + "\n"
+        rendered += "Player 1".center(len(vertical_separator)) + "\n"
+
+        return rendered
+
     def __repr__(self):
         my_string = ""
 
@@ -13,8 +33,8 @@ class Kalah(object):
             my_string += "2)"
         return my_string
 
-    # def __str__(self):
-    #     return  repr(self)
+    def __str__(self):
+        return self.render()
 
     def __init__(self, holes, seeds):
         self.kalah_board = [seeds if not i == holes and not i == ((holes * 2) + 1) else 0 for i in
@@ -134,5 +154,5 @@ class Kalah(object):
             return True
         return False
 
-k = Kalah(6, 4)
-print(k)
+
+

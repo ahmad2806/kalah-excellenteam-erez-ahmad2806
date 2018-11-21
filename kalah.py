@@ -4,13 +4,19 @@ class Kalah(object):
                             range(0, (holes * 2) + 2)]
         self.player_1 = 0
         self.player_2 = 0
-        self.holes_count = holes;
+        self.ties = 0
+        self.holes_count = holes
+        self.start_seeds = seeds
+        self.new_game_is_needed = False
         self.player_one_bank = holes
         self.player_two_bank = holes * 2 + 1
         self.player_turn = True  # true for player one and false for player two turn
 
     def play(self, hole):
-        if hole < 0 or hole > self.holes_count or hole == self.player_two_bank or hole == self.player_two_bank:
+        if self.new_game_is_needed:
+            print("game has ended, Please start new one")
+            print(f"score : player 1 = {self.player_1},  player 2 : {self.player_2}")
+        if hole < 0 or hole >= self.holes_count or hole == self.player_two_bank or hole == self.player_two_bank:
             print("illegal hole number")
             return
 
@@ -31,6 +37,20 @@ class Kalah(object):
         hole = self.move(hole, my_seeds, other_bank)
         hole = self.capture_seeds(hole, player_bank, other_bank)
 
+        is_winner = self.check_for_winner(player_bank)
+        if not is_winner:
+            game_end = \
+                self.game_has_ended(0, player_bank) if self.player_turn else self.game_has_ended(other_bank + 1,
+                                                                                                 player_bank)
+            if game_end:
+                self.get_points(player_bank + 1, other_bank, player_bank) \
+                    if self.player_turn else self.get_points(0, other_bank, player_bank)
+                if self.kalah_board[player_bank] == self.kalah_board[other_bank]:
+                    print("TIE")
+                    self.ties += 1
+                    self.new_game_is_needed = True
+
+                self.check_for_winner(player_bank)
         if hole != player_bank:
             self.player_turn = not self.player_turn
 
@@ -39,7 +59,7 @@ class Kalah(object):
             if hole < player_bank:
                 points = 1
                 points += self.kalah_board[other_bank - self.holes_count + hole]
-                if points == 1: # cell in the line before was empty
+                if points == 1:  # cell in the line before was empty
                     return hole
                 self.kalah_board[hole] = 0
                 self.kalah_board[other_bank - self.holes_count + hole] = 0
@@ -58,3 +78,48 @@ class Kalah(object):
             hole += 1
         hole -= 1
         return hole
+
+    def game_has_ended(self, start_index, end_index):
+        for cell in range(start_index, end_index):
+            if self.kalah_board[cell] != 0:
+                return False
+        return True
+
+    def get_points(self, start_index, end_index, winner_bank):
+
+        for cell in range(start_index, end_index):
+            self.kalah_board[winner_bank] += self.kalah_board[cell]
+            self.kalah_board[cell] = 0
+
+    def check_for_winner(self, player_bank):
+        if self.kalah_board[player_bank] > self.holes_count * self.start_seeds:
+            if self.player_turn:
+                self.player_1 += 1
+                print("PLAYER 1 WIN!")
+            else:
+                self.player_2 += 1
+                print("PLAYER 2 WIN!")
+            self.new_game_is_needed = True
+            return True
+        return False
+
+
+k = Kalah(6, 4)
+
+k.kalah_board = [
+    1, 2, 3, 0, 5, 6, 7,
+    0, 0, 1, 0, 0, 0, 10,
+]
+k.play(2)
+print(k.kalah_board)
+
+k.play(2)
+
+k1 = Kalah(6, 4)
+
+k1.kalah_board = [
+    0, 0, 1, 0, 0, 0, 10,
+    1, 2, 3, 1, 5, 6, 7,
+
+]
+k1.play(2)

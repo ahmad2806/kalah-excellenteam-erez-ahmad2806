@@ -138,6 +138,62 @@ class KalahTestCase(unittest.TestCase):
             ])
         self.assertEqual(self.game.player_turn, False)
 
+    def test_game_ends_and_player_1_capture(self):
+        self.assertEqual(self.game.player_turn, True)
+        self.game.kalah_board = [
+            0, 0, 1, 0, 0, 0, 10,
+            1, 2, 3, 1, 5, 6, 7,
+
+        ]
+        self.assertEqual(self.game.new_game_is_needed, False)
+        self.game.play(2)
+        self.game.kalah_board = [
+            0, 0, 0, 0, 0, 0, 29,
+            0, 0, 0, 0, 0, 0, 7,
+        ]
+        self.assertEqual(self.game.player_2, 0)
+        self.assertEqual(self.game.player_1, 1)
+        self.assertEqual(self.game.ties, 0)
+        self.assertEqual(self.game.new_game_is_needed, True)
+
+    def test_game_ends_and_player_2_capture(self):
+        self.assertEqual(self.game.player_turn, True)
+        self.game.kalah_board = [
+            1, 2, 3, 1, 5, 6, 7,
+            0, 0, 1, 0, 0, 0, 10,
+
+        ]
+        self.game.play(2)
+        self.game.play(2)
+        self.game.kalah_board = [
+            0, 0, 0, 0, 0, 0, 7,
+            0, 0, 0, 0, 0, 0, 29,
+
+        ]
+
+        self.assertEqual(self.game.player_2, 1)
+        self.assertEqual(self.game.player_1, 0)
+        self.assertEqual(self.game.ties, 0)
+        self.assertEqual(self.game.new_game_is_needed, True)
+
+    def test_game_ends_and_tie(self):
+        self.assertEqual(self.game.player_turn, True)
+        self.game.kalah_board = [
+            0, 1, 0, 0, 0, 0, 22,
+            0, 0, 1, 0, 0, 0, 24,
+
+        ]
+        self.assertEqual(self.game.new_game_is_needed, False)
+        self.game.play(1)
+        self.game.kalah_board = [
+            0, 0, 0, 0, 0, 0, 24,
+            0, 0, 0, 0, 0, 0, 24,
+        ]
+        self.assertEqual(self.game.player_2, 0)
+        self.assertEqual(self.game.player_1, 0)
+        self.assertEqual(self.game.ties, 1)
+
+        self.assertEqual(self.game.new_game_is_needed, True)
 
 if __name__ == '__main__':
     unittest.main()

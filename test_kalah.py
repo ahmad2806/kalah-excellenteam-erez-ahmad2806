@@ -250,9 +250,9 @@ class KalahTestCase(unittest.TestCase):
         self.assertEqual(self.game.new_game_is_needed, True)
 
     def test_repr(self):
-        self.assertEqual(repr(self.game), "Kalah[4, 4, 4, 4, 4, 4, 0, 4, 4, 4, 4, 4, 4, 0], player = 1")
+        self.assertEqual(repr(self.game), "Kalah(4, 6, status=(4, 4, 4, 4, 4, 4, 0, 4, 4, 4, 4, 4, 4, 0), player = 1)")
         self.game.player_turn = not self.game.player_turn
-        self.assertEqual(repr(self.game), "Kalah[4, 4, 4, 4, 4, 4, 0, 4, 4, 4, 4, 4, 4, 0], player = 2")
+        self.assertEqual(repr(self.game), "Kalah(4, 6, status=(4, 4, 4, 4, 4, 4, 0, 4, 4, 4, 4, 4, 4, 0), player = 2)")
 
     def test_str(self):
 

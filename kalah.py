@@ -2,13 +2,15 @@ class Kalah(object):
     def __repr__(self):
         my_string = ""
 
-        my_string += "Kalah"
-        my_string += str(self.kalah_board)
+        my_string += "Kalah("
+        my_string += f"{str(self.start_seeds)}, {str(self.holes_count)}, status="
+
+        my_string += str(tuple(self.kalah_board))
         my_string += ", player = "
         if self.player_turn:
-            my_string += "1"
+            my_string += "1)"
         else:
-            my_string += "2"
+            my_string += "2)"
         return my_string
 
     # def __str__(self):
@@ -131,3 +133,6 @@ class Kalah(object):
             self.new_game_is_needed = True
             return True
         return False
+
+k = Kalah(6, 4)
+print(k)

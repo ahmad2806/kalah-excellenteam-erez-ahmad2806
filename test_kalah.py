@@ -131,7 +131,6 @@ class KalahTestCase(unittest.TestCase):
         ]
         self.assertEqual(self.game.player_turn, False)
 
-
     def test_no_capture_player(self):
         self.game.kalah_board = [
             1, 0, 3, 4, 5, 6, 7,
@@ -246,6 +245,7 @@ class KalahTestCase(unittest.TestCase):
         self.assertEqual(self.game.player_2, 1)
         self.assertEqual(self.game.player_1, 0)
         self.assertEqual(self.game.ties, 0)
+
         self.assertEqual(self.game.new_game_is_needed, True)
 
 

@@ -117,35 +117,3 @@ class Kalah(object):
             return True
         return False
 
-#
-# k = Kalah(6, 4)
-#
-# k.kalah_board = [
-#     1, 2, 3, 0, 5, 6, 7,
-#     0, 0, 1, 0, 0, 0, 10,
-# ]
-# k.play(2)
-# print(k.kalah_board)
-#
-# k.play(2)
-#
-# k1 = Kalah(6, 4)
-#
-# k1.kalah_board = [
-#     0, 0, 1, 0, 0, 0, 10,
-#     1, 2, 3, 1, 5, 6, 7,
-# #
-# # ]
-# # k1.play(2)
-# k2 = Kalah(6,4)
-# k2.kalah_board = [
-#     0, 0, 1, 0, 0, 0, 22,
-#     1, 2, 3, 1, 5, 6, 8,
-#
-# ]
-# print(k2.new_game_is_needed)
-# k2.play(2)
-# print(k2.kalah_board)
-# print(k2.player_1)
-# print(k2.player_2)
-# print(k2.ties)

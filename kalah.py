@@ -37,20 +37,20 @@ class Kalah(object):
         hole = self.move(hole, my_seeds, other_bank)
         hole = self.capture_seeds(hole, player_bank, other_bank)
 
-        is_winner = self.check_for_winner(player_bank)
+        is_winner = self.check_for_winner(player_bank, True)
         if not is_winner:
             game_end = \
                 self.game_has_ended(0, player_bank) if self.player_turn else self.game_has_ended(other_bank + 1,
                                                                                                  player_bank)
             if game_end:
-                self.get_points(player_bank + 1, other_bank, player_bank) \
-                    if self.player_turn else self.get_points(0, other_bank, player_bank)
+                self.get_points(player_bank + 1, other_bank) \
+                    if self.player_turn else self.get_points(0, other_bank)
                 if self.kalah_board[player_bank] == self.kalah_board[other_bank]:
                     print("TIE")
                     self.ties += 1
                     self.new_game_is_needed = True
 
-                self.check_for_winner(player_bank)
+                self.check_for_winner(other_bank, False)
         if hole != player_bank:
             self.player_turn = not self.player_turn
 
@@ -62,7 +62,12 @@ class Kalah(object):
                 if points == 1:  # cell in the line before was empty
                     return hole
                 self.kalah_board[hole] = 0
-                self.kalah_board[other_bank - self.holes_count + hole] = 0
+                temp = 0
+                if hole / self.holes_count < 1:
+                    temp = other_bank - self.holes_count + hole
+                else:
+                    temp = other_bank - self.holes_count + (hole % self.holes_count)-1
+                self.kalah_board[temp] = 0
                 self.kalah_board[player_bank] += points
                 return player_bank
         return hole
@@ -85,41 +90,62 @@ class Kalah(object):
                 return False
         return True
 
-    def get_points(self, start_index, end_index, winner_bank):
+    def get_points(self, start_index, end_index):
 
         for cell in range(start_index, end_index):
-            self.kalah_board[winner_bank] += self.kalah_board[cell]
+            self.kalah_board[end_index] += self.kalah_board[cell]
             self.kalah_board[cell] = 0
 
-    def check_for_winner(self, player_bank):
-        if self.kalah_board[player_bank] > self.holes_count * self.start_seeds:
-            if self.player_turn:
-                self.player_1 += 1
-                print("PLAYER 1 WIN!")
+    def check_for_winner(self, bank_to_check, player_playing):
+        if self.kalah_board[bank_to_check] > self.holes_count * self.start_seeds:
+
+            if player_playing:
+                if self.player_turn:
+                    self.player_1 += 1
+                    print("PLAYER 1 WIN!")
+                else:
+                    self.player_2 += 1
+                    print("PLAYER 2 WIN!")
             else:
-                self.player_2 += 1
-                print("PLAYER 2 WIN!")
+                if not self.player_turn:
+                    self.player_1 += 1
+                    print("PLAYER 1 WIN!")
+                else:
+                    self.player_2 += 1
+                    print("PLAYER 2 WIN!")
             self.new_game_is_needed = True
             return True
         return False
 
-
-k = Kalah(6, 4)
-
-k.kalah_board = [
-    1, 2, 3, 0, 5, 6, 7,
-    0, 0, 1, 0, 0, 0, 10,
-]
-k.play(2)
-print(k.kalah_board)
-
-k.play(2)
-
-k1 = Kalah(6, 4)
-
-k1.kalah_board = [
-    0, 0, 1, 0, 0, 0, 10,
-    1, 2, 3, 1, 5, 6, 7,
-
-]
-k1.play(2)
+#
+# k = Kalah(6, 4)
+#
+# k.kalah_board = [
+#     1, 2, 3, 0, 5, 6, 7,
+#     0, 0, 1, 0, 0, 0, 10,
+# ]
+# k.play(2)
+# print(k.kalah_board)
+#
+# k.play(2)
+#
+# k1 = Kalah(6, 4)
+#
+# k1.kalah_board = [
+#     0, 0, 1, 0, 0, 0, 10,
+#     1, 2, 3, 1, 5, 6, 7,
+# #
+# # ]
+# # k1.play(2)
+# k2 = Kalah(6,4)
+# k2.kalah_board = [
+#     0, 0, 1, 0, 0, 0, 22,
+#     1, 2, 3, 1, 5, 6, 8,
+#
+# ]
+# print(k2.new_game_is_needed)
+# k2.play(2)
+# print(k2.kalah_board)
+# print(k2.player_1)
+# print(k2.player_2)
+# print(k2.ties)

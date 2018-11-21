@@ -155,38 +155,39 @@ class KalahTestCase(unittest.TestCase):
     def test_game_ends_and_player_1_capture(self):
         self.assertEqual(self.game.player_turn, True)
         self.game.kalah_board = [
-            0, 0, 1, 0, 0, 0, 10,
-            1, 2, 3, 1, 5, 6, 7,
+            0, 0, 1, 0, 0, 0, 21,
+            1, 2, 3, 1, 5, 6, 8,
 
         ]
         self.assertEqual(self.game.new_game_is_needed, False)
         self.game.play(2)
-        self.game.kalah_board = [
-            0, 0, 0, 0, 0, 0, 29,
-            0, 0, 0, 0, 0, 0, 7,
-        ]
-        self.assertEqual(self.game.player_2, 0)
-        self.assertEqual(self.game.player_1, 1)
+        self.assertEqual(self.game.kalah_board, [
+            0, 0, 0, 0, 0, 0, 23,
+            0, 0, 0, 0, 0, 0, 25,
+        ])
+
+        self.assertEqual(self.game.player_2, 1)
+        self.assertEqual(self.game.player_1, 0)
         self.assertEqual(self.game.ties, 0)
         self.assertEqual(self.game.new_game_is_needed, True)
 
     def test_game_ends_and_player_2_capture(self):
         self.assertEqual(self.game.player_turn, True)
         self.game.kalah_board = [
-            1, 2, 3, 1, 5, 6, 7,
-            0, 0, 1, 0, 0, 0, 10,
+            1, 2, 3, 1, 5, 6, 8,
+            0, 0, 1, 0, 0, 0, 21,
 
         ]
+        self.assertEqual(self.game.new_game_is_needed, False)
+        self.game.player_turn = not self.game.player_turn
         self.game.play(2)
-        self.game.play(2)
-        self.game.kalah_board = [
-            0, 0, 0, 0, 0, 0, 7,
-            0, 0, 0, 0, 0, 0, 29,
+        self.assertEqual(self.game.kalah_board, [
+            0, 0, 0, 0, 0, 0, 25,
+            0, 0, 0, 0, 0, 0, 23,
+        ])
 
-        ]
-
-        self.assertEqual(self.game.player_2, 1)
-        self.assertEqual(self.game.player_1, 0)
+        self.assertEqual(self.game.player_2, 0)
+        self.assertEqual(self.game.player_1, 1)
         self.assertEqual(self.game.ties, 0)
         self.assertEqual(self.game.new_game_is_needed, True)
 
